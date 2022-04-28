@@ -1,0 +1,10 @@
+{
+	"data_sources": {
+		"api": {
+			"Sunrise-Sunset": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&formatted=0",
+			"Ocean-Depth": "https://api.meteomatics.com/2022-04-28T00Z/ocean_depth:m/50,-60_50,0:10/csv"
+		"csv": {
+			"CSV_source": "csv_file_name.csv"
+		}
+	}
+}
