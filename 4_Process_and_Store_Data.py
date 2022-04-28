@@ -21,10 +21,10 @@ class Transformation:
             print('Unkown Data Source!!! Please try again...')
             
     # Economy Data Transformation
-    def apiSunSR(self):
-        gdp_india = {}
-        for record in self.data['records']:
-            gdp={}
+    def apiOceanDepth(self):
+        depth = {}
+        for record in self.data['ocean_depth:m']:
+            ocean_depth={}
             
             # taking out yearly GDP value from records
             gdp['GDP_in_rs_cr'] = int(record['gross_domestic_product_in_rs_cr_at_2004_05_prices'])
