@@ -1,13 +1,12 @@
 import pandas as pd
 import requests
-import json
-from operator import itemgetter
 
-# make a call to the API and parse to json file
+import config
+from config import weather_api_key
+
 link = "https://api.open-meteo.com/v1/forecast?latitude=50.57&longitude=-2.45&hourly=windgusts_10m&windspeed_unit=kn&timezone=Europe%2FBerlin"
 r = requests.get(link)
 data = r.json()
-
 
 # Iterating through the json
 # list
@@ -32,3 +31,33 @@ for pair in nested_dict_pairs_iterator(data):
 
 # Closing file
 r.close()
+
+def get_wind_data():
+    gust_list = []
+    # make a call to the API and parse to json file
+    link = "https://api.open-meteo.com/v1/forecast?latitude=50.57&longitude=-2.45&hourly=windgusts_10m&windspeed_unit=kn&timezone=Europe%2FBerlin"
+    r = requests.get(link)
+    data = r.json()
+
+    df = pd.DataFrame(data['hourly'])
+    df.to_csv('wind_by_hour.csv')
+
+#get_wind_data()
+
+def get_weather_data():
+    _list = []
+    API_key = config.weather_api_key
+    # make a call to the API and parse to json file
+    link = "https://api.openweathermap.org/data/2.5/onecall?lat=50.57&lon=2.45&exclude=hourly,current,minutely,alerts&appid=" + API_key
+    r = requests.get(link)
+    data = r.json()
+    print(data)
+
+    df = pd.DataFrame(data['daily'])
+    df = df['wind_deg']
+    df.to_csv('direction_by_hour.csv')
+
+get_weather_data()
+
+
+
