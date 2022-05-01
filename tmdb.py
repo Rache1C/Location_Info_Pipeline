@@ -1,6 +1,5 @@
 import pandas as pd
 import requests
-
 import config
 from config import weather_api_key
 
@@ -57,7 +56,7 @@ def get_weather_data():
     df = df['wind_deg']
     df.to_csv('direction_by_hour.csv')
 
-get_weather_data()
+#get_weather_data()
 
 
 
