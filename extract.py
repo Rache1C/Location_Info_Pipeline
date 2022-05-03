@@ -3,6 +3,7 @@ import requests
 import config
 from config import weather_api_key
 
+# call to API to explore data set
 link = "https://api.open-meteo.com/v1/forecast?latitude=50.57&longitude=-2.45&hourly=windgusts_10m&windspeed_unit=kn&timezone=Europe%2FBerlin"
 r = requests.get(link)
 data = r.json()
@@ -35,53 +36,62 @@ r.close()
 
 
 # make a call to open_meteo API to get gust data in knots
-def get_gust_data():
+def get_gust_data(lat, lon):
     gust_list = []
     # make a call to the API and parse to json file
-    link = "https://api.open-meteo.com/v1/forecast?latitude=50.57&longitude=-2.45&hourly=windgusts_10m&windspeed_unit=kn&timezone=Europe%2FBerlin"
+    link = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=windgusts_10m&windspeed_unit=kn&timezone=Europe%2FBerlin"
     r = requests.get(link)
     data = r.json()
 
-    #create df, drop index ready for merge and send to csv
+    # create df, drop index ready for merge and send to csv
     df = pd.DataFrame(data['hourly'])
     df1 = df.drop(df.index[48:])
     df1.to_csv('gusts_by_hour.csv')
 
 
 # used during testing
-# get_wind_data()
+# get_gust_data('50.57', '-2.45')
 
-
-def get_direction_data():
+# make call to open weather map to get wind direction
+def get_direction_data(lat, lon):
     _list = []
     API_key = config.weather_api_key
     # make a call to the API and parse to json file
-    link = "https://api.openweathermap.org/data/2.5/onecall?lat=50.57&lon=2.45&exclude=daily,current,minutely,alerts&appid=" + API_key
+    link = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=daily,current,minutely,alerts&appid=" + API_key
     r = requests.get(link)
     data = r.json()
 
-    #create df, load only wind_deg col, send to csv
+    # create df, load only wind_deg col, send to csv
     df = pd.DataFrame(data['hourly'])
     df = df['wind_deg']
     df.to_csv('direction_by_hour.csv')
 
-
-# get_weather_data()
+# used in testing
+# get_direction_data('50.57', '-2.45')
 
 
 def create_data_set():
     # assign to df
     a = pd.read_csv("gusts_by_hour.csv")
     b = pd.read_csv("direction_by_hour.csv")
-    #merge dfs and drop duplicate index column
+
+    # merge dfs and drop duplicate index column
     wind_predict = pd.merge(a, b)
     wind_predict = wind_predict.drop('Unnamed: 0', axis=1)
-    #swap columns to put in logical order
-    wind_predict['temp'] = wind_predict['windgusts_10m']
-    wind_predict['windgusts_10m'] = wind_predict['time']
-    wind_predict['time'] = wind_predict['temp']
-    wind_predict.drop(columns=['temp'], inplace=True)
-    #send to csv
+
+    # send to csv
     wind_predict.to_csv("wind_predict.csv")
 
+
+# used in testing
 # create_data_set()
+
+# clean column order
+def tidy_up():
+    df = pd.read_csv('wind_predict.csv')
+    # put columns into logical order
+    df = df[["time", "windgusts_10m", "wind_deg"]]
+
+    df.to_csv("wind_predict.csv")
+
+# tidy_up()

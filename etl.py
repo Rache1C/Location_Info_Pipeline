@@ -1,12 +1,14 @@
 import sql_queries
-import tmdb
+import extract
 
-#Extract data from API and send to csv (stored locally)
-tmdb.get_gust_data()
-tmdb.get_direction_data()
-tmdb.create_data_set()
+# Extract data from API and send to csv (stored locally)
+# pass latitude and longitude of choice
+extract.get_gust_data('50.57', '-2.45')
+extract.get_direction_data('50.57', '-2.45')
+extract.create_data_set()
+extract.tidy_up()
 
-#save data to MySql Database
-#Database is created locally in MySQL Workbench
-#Table is created if not already exists
+# Save data to MySql Database
+# Database is created locally in MySQL Workbench
+# Table is created to refresh for current data
 sql_queries.insert_records()
