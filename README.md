@@ -1,4 +1,5 @@
 Project Description
+
 This is a pipeline which gets data on wind gusts (kts) and wind direction (ºT) for a chosen location (latitude and longitude) for the next 48 hours. 
 
 Prerequisites
