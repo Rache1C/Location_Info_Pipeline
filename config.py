@@ -1,7 +1,7 @@
-weather_api_key = '016516df34d9431254575ef9cb11be01'
+weather_api_key = ''
 
-USER = 'root'
+USER = ''
 
-PASSWORD = 'Ex!st3nc31989'
+PASSWORD = ''
 
-HOST = 'localhost'
+HOST = ''
