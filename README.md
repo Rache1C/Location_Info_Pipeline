@@ -2,6 +2,10 @@ Project Description
 
 This is a pipeline which gets data on wind gusts (kts) and wind direction (ºT) for a chosen location (latitude and longitude) for the next 48 hours. 
 
+
+![alt text](https://github.com/rashelie/Location_Info_Pipeline/blob/main/Pipeline_Diagram.jpg)
+
+
 Prerequisites
 
 Before you continue, ensure you have met the following requirements:
