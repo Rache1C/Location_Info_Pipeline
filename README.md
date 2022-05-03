@@ -20,4 +20,5 @@ Running the Pipeline
 * Clone this repo, currently private, please request access.
 * Add your database credentials to the config.py file.
 * Get API key for https://openweathermap.org/api/one-call-api and add this to config.py file for "weather_api_key" variable.
+* A value for latitude and longitude is provided in the etl.py file to pass to the extraction functions, but these can be updated to suit your location.
 * Run the etl.py file to invoke all required functions.
